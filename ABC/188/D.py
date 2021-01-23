@@ -8,7 +8,7 @@ for i in range(N):
     a, b, c = input().split()
     a, b, c = int(a), int(b), int(c)
 
-    change_days.append([a, b])
+    change_days.append([a-1, b])
     costs.append(c)
 
 changes = []
@@ -25,27 +25,27 @@ for i in range(len(change_days)):
 
 changes.sort(key=lambda x: x[0])
 
-cost = 0
+
+start = changes[0][0]
+end = changes[len(changes) - 1][0]
+
+days = [0] * (end - start + 1)
+
+for i in range(len(changes)):
+    day = changes[i][0]
+    change = changes[i][1]
+
+    days[day] += change
+
+
 summary = 0
+current = 0
 
-same = False
-same_cost = 0
-
-for i in range(len(changes) - 1):
-    this = changes[i]
-    next = changes[i+1]
-    cost += this[1]
-
-    during = next[0] - this[0]
-    if during == 0:
-        same = True
-        same_cost += cost
-        pass
-    elif during != 0 and same:
-        same = False
-    if cost > C:
-        summary += during*C
+for cost in days[:len(days) - 1]:
+    current += cost
+    if current > C:
+        summary += C
     else:
-        summary += during * cost
+        summary += current
 
 print(summary)
