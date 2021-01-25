@@ -9,10 +9,9 @@ for n in range(1, N+1):
     V, P = input().split()
     V, P = int(V), int(P)
 
-    print(V * P / 100)
-    amount += V * P / 100
+    amount += V * P
 
-    if amount > X:
+    if amount > X * 100:
         print(n)
         sys.exit()
 
