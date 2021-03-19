@@ -1,23 +1,22 @@
-import itertools
-
 N = int(input())
-
 A = input().split()
 
-square = 0
+number_appear = dict()
 
-for a in A:
-    square += int(a) ** 2
+for i in range(-200, 201):
+    number_appear[str(i)] = 0
 
-square *= 2
+for i in range(len(A)):
+    number_appear[A[i]] += 1
 
-combinations = itertools.combinations(A, 2)
+answer = 0
 
-product = 0
+for i in range(-200, 201):
+    for j in range(-200, 201):
+        if i == j:
+            pass
+        else:
+            square = (i - j) ** 2
+            answer += square * number_appear[str(i)] * number_appear[str(j)]
 
-for c in combinations:
-    product += int(c[0]) * int(c[1])
-
-product *= -2
-
-print(square + product)
+print(int(answer / 2))
