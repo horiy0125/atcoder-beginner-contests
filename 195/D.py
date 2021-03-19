@@ -8,10 +8,9 @@ for index in range(N):
     W, V = map(int, input().split())
     baggages.append([W, V])
 
-size_sorted_baggages = sorted(baggages, key=lambda x: x[0], reverse=True)
 value_sorted_baggages = sorted(baggages, key=lambda x: x[1], reverse=True)
 
-capacities = map(int, input().split())
+capacities = list(map(int, input().split()))
 
 for query in range(Q):
     L, R = map(int, input().split())
@@ -24,5 +23,20 @@ for query in range(Q):
     elif one_box:
         print(value_sorted_baggages[0][1])
     else:
-        available_boxes = baggages[:R] + baggages[L+1:]
-        com = itertools.permutations(range(len(available_boxes)))
+        available_boxes = capacities[:R-1] + capacities[L+1:]
+        available_boxes = sorted(available_boxes)
+        value = 0
+        for baggage in value_sorted_baggages:
+            W, V = baggage[0], baggage[1]
+            index = 0
+            if available_boxes[index] >= W:
+                value += V
+            else:
+                while available_boxes[index] < W:
+                    index += 1
+
+                value += V
+
+            del available_boxes[index]
+
+        print(value)
